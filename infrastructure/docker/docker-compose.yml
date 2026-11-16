@@ -1,0 +1,52 @@
+# Run everything locally:  docker compose -f infrastructure/docker/docker-compose.yml up --build
+# Load sample data once:    docker compose -f infrastructure/docker/docker-compose.yml run --rm seed
+name: dono-auto-care
+
+x-portal: &portal
+  build: &portal-build
+    context: ../..
+    dockerfile: infrastructure/docker/Dockerfile.portal
+  depends_on: [backend]
+
+services:
+  mongo:
+    image: mongo:7
+    restart: unless-stopped
+    ports: ["27017:27017"]
+    volumes:
+      - mongo-data:/data/db
+      - ../database/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+
+  backend:
+    build: { context: ../.., dockerfile: infrastructure/docker/Dockerfile.backend }
+    restart: unless-stopped
+    depends_on: [mongo]
+    ports: ["4000:4000"]
+    environment:
+      NODE_ENV: development
+      API_PORT: 4000
+      MONGODB_URI: mongodb://mongo:27017/automotive_marketplace
+      JWT_SECRET: ${JWT_SECRET:-local-dev-secret-change-me-local-dev-secret}
+      OTP_DEV_CODE: "123456"
+      CORS_ORIGINS: http://localhost:5173,http://localhost:5174,http://localhost:5175,http://localhost:5176,http://localhost:5177,http://localhost:5178,http://localhost:5179
+
+  seed:
+    build: { context: ../.., dockerfile: infrastructure/docker/Dockerfile.backend }
+    profiles: [tools]
+    depends_on: [mongo]
+    environment:
+      NODE_ENV: development
+      MONGODB_URI: mongodb://mongo:27017/automotive_marketplace
+      JWT_SECRET: local-dev-secret-change-me-local-dev-secret
+    command: ["npx", "tsx", "src/seed/seed.ts"]
+
+  customer-web:       { <<: *portal, build: { <<: *portal-build, args: { APP: customer-web } },       ports: ["5173:80"] }
+  seller-portal:      { <<: *portal, build: { <<: *portal-build, args: { APP: seller-portal } },      ports: ["5174:80"] }
+  distributor-portal: { <<: *portal, build: { <<: *portal-build, args: { APP: distributor-portal } }, ports: ["5175:80"] }
+  workshop-portal:    { <<: *portal, build: { <<: *portal-build, args: { APP: workshop-portal } },    ports: ["5176:80"] }
+  towing-portal:      { <<: *portal, build: { <<: *portal-build, args: { APP: towing-portal } },      ports: ["5177:80"] }
+  fleet-portal:       { <<: *portal, build: { <<: *portal-build, args: { APP: fleet-portal } },       ports: ["5178:80"] }
+  admin-portal:       { <<: *portal, build: { <<: *portal-build, args: { APP: admin-portal } },       ports: ["5179:80"] }
+
+volumes:
+  mongo-data:

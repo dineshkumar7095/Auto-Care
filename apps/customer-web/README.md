@@ -1,0 +1,28 @@
+# Customer website — `customer-web`
+
+Independent app: its own routes, layout, navigation, tests and build. Shares only `packages/*` and the backend.
+
+```bash
+npm run dev -w @automotive/customer-web     # http://localhost:5173
+npm run test -w @automotive/customer-web
+npm run build -w @automotive/customer-web   # -> apps/customer-web/dist
+```
+
+**Demo sign-in:** +919800000001 · OTP `123456` · Arjun (customer)
+
+**Screens:** Home, part search with fitment badges, part details with other sellers' offers, workshop booking, towing request, business sign-up, my account
+
+**Routes:** /, /parts, /parts/:id, /services, /towing, /business, /account (signed in)
+
+## Folder layout
+
+```text
+src/
+  app/          config (portal id), env, navigation, router
+  routes/       file-based routes (TanStack Router); _portal/ (or _site/_account/) is the guarded area
+  layouts/      this portal's shell and navigation
+  features/     one folder per feature: api.ts (queries), *-rules.ts (pure logic + tests), components/
+  test/         access-control tests (signed out -> /login, wrong role -> /unauthorized)
+```
+
+Set `VITE_USE_MOCKS=false` in `.env` to use the real backend instead of built-in sample data.

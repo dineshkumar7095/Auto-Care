@@ -1,0 +1,6 @@
+@import "tailwindcss" source(none);
+@source "./";
+@source "../../../packages/shared-ui/src";
+@source "../../../packages/authentication/src";
+@import "tw-animate-css";
+@import "../../../packages/shared-ui/src/styles/theme.css";

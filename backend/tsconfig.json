@@ -1,0 +1,5 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": { "lib": ["ES2022"], "types": ["node", "vitest/globals"], "jsx": "preserve" },
+  "include": ["src", "test", "vitest.config.ts"]
+}

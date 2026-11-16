@@ -1,0 +1,38 @@
+{
+  "name": "dono-auto-care",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Dono Auto Care \u2014 automotive super marketplace. modular monorepo: independent portal apps, shared packages, one backend.",
+  "workspaces": [
+    "packages/*",
+    "apps/customer-web",
+    "apps/seller-portal",
+    "apps/distributor-portal",
+    "apps/workshop-portal",
+    "apps/towing-portal",
+    "apps/fleet-portal",
+    "apps/admin-portal",
+    "apps/customer-mobile",
+    "apps/driver-mobile",
+    "backend"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "dev:backend": "npm run dev -w @automotive/backend",
+    "dev:customer": "npm run dev -w @automotive/customer-web",
+    "dev:seller": "npm run dev -w @automotive/seller-portal",
+    "dev:distributor": "npm run dev -w @automotive/distributor-portal",
+    "dev:workshop": "npm run dev -w @automotive/workshop-portal",
+    "dev:towing": "npm run dev -w @automotive/towing-portal",
+    "dev:fleet": "npm run dev -w @automotive/fleet-portal",
+    "dev:admin": "npm run dev -w @automotive/admin-portal",
+    "seed": "npm run seed -w @automotive/backend",
+    "build": "npm run build --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "dev:customer-mobile": "npm run dev -w @automotive/customer-mobile",
+    "dev:driver-mobile": "npm run dev -w @automotive/driver-mobile"
+  }
+}

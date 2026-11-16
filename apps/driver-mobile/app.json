@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Dono Driver",
+    "slug": "dono-driver",
+    "scheme": "donodriver",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": { "bundleIdentifier": "com.donodriver.customer", "supportsTablet": true },
+    "android": { "package": "com.donodriver.customer", "adaptiveIcon": { "backgroundColor": "#0b2545" } },
+    "plugins": ["expo-router", "expo-secure-store"],
+    "experiments": { "typedRoutes": false }
+  }
+}

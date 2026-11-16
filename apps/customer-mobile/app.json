@@ -1,0 +1,15 @@
+{
+  "expo": {
+    "name": "Dono Auto Care",
+    "slug": "dono-auto-care",
+    "scheme": "donoautocare",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "newArchEnabled": true,
+    "ios": { "bundleIdentifier": "com.donoautocare.customer", "supportsTablet": true },
+    "android": { "package": "com.donoautocare.customer", "adaptiveIcon": { "backgroundColor": "#0b2545" } },
+    "plugins": ["expo-router", "expo-secure-store"],
+    "experiments": { "typedRoutes": false }
+  }
+}
